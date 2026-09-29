@@ -1,0 +1,281 @@
+Found 7 CSV file(s) under /Users/krish/ufc_scraper/Whole_Dataset
+
+================================================================================
+FILE: event.csv   rows=1,259   cols=4
+================================================================================
+Columns (dtype, % missing, example value):
+  event_id                            str          0.0%  495add4fbede0a44
+  event_name                          str          0.0%  UFC Fight Night: Gamrot vs. Salkilld
+  date                                str          0.0%  2026-08-08  <--
+  location                            str         37.8%  Las Vegas, Nevada, USA
+  date range [date]: 1993-11-12 -> 2026-08-08 (0 unparseable/missing)
+  rows per year (2010+): 2010:54, 2011:50, 2012:43, 2013:36, 2014:46, 2015:41, 2016:41, 2017:47, 2018:50, 2019:52, 2020:51, 2021:53, 2022:58, 2023:56, 2024:56, 2025:55, 2026:28
+
+First 3 rows:
+           event_id                            event_name        date                                    location
+0  495add4fbede0a44  UFC Fight Night: Gamrot vs. Salkilld  2026-08-08                      Las Vegas, Nevada, USA
+1  1a50e734bb54861a  UFC Fight Night: Medic vs. Rodriguez  2026-08-01                 Belgrade, Vojvodina, Serbia
+2  681d07e328798ec0  UFC Fight Night: Ankalaev vs. Guskov  2026-07-25  Abu Dhabi, Abu Dhabi, United Arab Emirates
+
+================================================================================
+FILE: fight.csv   rows=11,441   cols=14
+================================================================================
+Columns (dtype, % missing, example value):
+  event_id                            str          0.0%  baf942f4bcb09894
+  fight_id                            str          0.0%  4cd909fa0d3e0483
+  weight_class                        str          0.0%  Welterweight  <--
+  title_fight                         int64        0.0%  0
+  r_id                                str          0.0%  c3ea8deeba00462b
+  b_id                                str          0.0%  ad32471f01e7b1a5
+  winner_id                           str          1.8%  c3ea8deeba00462b  <--
+  result_status                       str          0.0%  win  <--
+  method                              str          0.0%  Submission  <--
+  round                               int64        0.0%  2
+  time                                str          0.0%  1:11
+  time_format                         str          0.0%  3 Rnd (5-5-5)
+  referee                             str          2.3%  Herb Dean
+  details                             str          3.5%  Injury  
+      Neck Injury
+
+First 3 rows:
+           event_id          fight_id  weight_class  title_fight              r_id              b_id         winner_id result_status      method  round  time    time_format           referee                      details
+0  baf942f4bcb09894  4cd909fa0d3e0483  Welterweight            0  c3ea8deeba00462b  ad32471f01e7b1a5  c3ea8deeba00462b           win  Submission      2  1:11  3 Rnd (5-5-5)         Herb Dean  Injury  \n      Neck Injury
+1  c61f66d8c3fd5f07  5ac9cf4ffc15ccca  Welterweight            0  f57a8a52ca401ed9  ad32471f01e7b1a5  f57a8a52ca401ed9           win  Submission      3  2:04  3 Rnd (5-5-5)  Steve Mazzagatti     Armbar From Bottom Guard
+2  80e6d71e14c1d356  e8ec95cdef577733  Welterweight            0  79899ecf62020f6d  ad32471f01e7b1a5  79899ecf62020f6d           win      KO/TKO      1  1:27  3 Rnd (5-5-5)               NaN   Punches to Head From Mount
+
+================================================================================
+FILE: fighter.csv   rows=4,581   cols=16
+================================================================================
+Columns (dtype, % missing, example value):
+  fighter_id                          str          0.0%  ad32471f01e7b1a5
+  fighter_name                        str          0.0%  Jeremy Jackson
+  fighter_nick_name                   str         44.3%  Scorpion
+  height                              str          8.1%  5' 10"
+  weight_lbs                          float64      1.9%  170.0  <--
+  reach_inches                        float64     43.5%  68.0
+  stance                              str         19.6%  Orthodox
+  dob                                 str         11.1%  1982-09-19  <--
+  slpm                                float64      0.0%  0.71
+  str_acc                             int64        0.0%  27  <--
+  sapm                                float64      0.0%  2.03
+  str_def                             int64        0.0%  25  <--
+  td_avg                              float64      0.0%  1.52  <--
+  td_acc                              int64        0.0%  40  <--
+  td_def                              int64        0.0%  58  <--
+  sub_avg                             float64      0.0%  0.0  <--
+  date range [dob]: 1943-01-25 -> 2005-12-20 (510 unparseable/missing)
+
+First 3 rows:
+         fighter_id    fighter_name fighter_nick_name  height  weight_lbs  reach_inches    stance         dob  slpm  str_acc  sapm  str_def  td_avg  td_acc  td_def  sub_avg
+0  ad32471f01e7b1a5  Jeremy Jackson          Scorpion  5' 10"       170.0           NaN  Orthodox  1982-09-19  0.71       27  2.03       25    1.52      40      58      0.0
+1  13b2f59210dda9cc   Kevin Jackson               NaN  5' 10"       199.0           NaN    Switch  1964-11-25  0.00        0  0.00        0    0.00       0       0      0.0
+2  b4eeac608fc82f88    Yves Jabouin             Tiger   5' 7"       135.0          68.0  Orthodox  1979-05-30  3.06       41  2.93       62    1.94      60      82      0.1
+
+================================================================================
+FILE: fighter_bonus.csv   rows=2,409   cols=2
+================================================================================
+Columns (dtype, % missing, example value):
+  fight_id                            str          0.0%  21392a61a2cf24a3
+  bonus_type                          str          0.0%  Knockout of the Night
+
+First 3 rows:
+           fight_id                bonus_type
+0  21392a61a2cf24a3     Knockout of the Night
+1  1bf7f647f309464e  Performance of the Night
+2  8348ff428d1687ab   Submission of the Night
+
+================================================================================
+FILE: master.csv   rows=11,441   cols=93
+================================================================================
+Columns (dtype, % missing, example value):
+  fight_id                            str          0.0%  4cd909fa0d3e0483
+  event_id                            str          0.0%  baf942f4bcb09894
+  event_name                          str          0.0%  The Ultimate Fighter: The Comeback Final
+  event_date                          str          0.0%  2006-11-11  <--
+  event_location                      str         22.9%  Las Vegas, Nevada, USA
+  weight_class                        str          0.0%  Welterweight  <--
+  title_fight                         int64        0.0%  0
+  winner_id                           str          1.8%  c3ea8deeba00462b  <--
+  result_status                       str          0.0%  win  <--
+  method                              str          0.0%  Submission  <--
+  finish_round                        int64        0.0%  2
+  finish_time                         str          0.0%  1:11
+  time_format                         str          0.0%  3 Rnd (5-5-5)
+  referee                             str          2.3%  Herb Dean
+  details                             str          3.5%  Injury  
+      Neck Injury
+  bonuses                             str         79.5%  Knockout of the Night
+  r_fighter_id                        str          0.0%  c3ea8deeba00462b
+  r_fighter_name                      str          0.0%  Pete Spratt
+  r_fighter_nick_name                 str         30.5%  The Secret Weapon
+  r_height                            str          0.7%  5' 9"
+  r_weight_lbs                        float64      0.2%  170.0  <--
+  r_reach_inches                      float64     11.5%  76.0
+  r_stance                            str          1.9%  Orthodox
+  r_dob                               str          1.2%  1971-01-09  <--
+  r_slpm                              float64      0.0%  1.63
+  r_str_acc                           int64        0.0%  48  <--
+  r_sapm                              float64      0.0%  1.33
+  r_str_def                           int64        0.0%  55  <--
+  r_td_avg                            float64      0.0%  0.3  <--
+  r_td_acc                            int64        0.0%  100  <--
+  r_td_def                            int64        0.0%  46  <--
+  r_sub_avg                           float64      0.0%  0.3  <--
+  b_fighter_id                        str          0.0%  ad32471f01e7b1a5
+  b_fighter_name                      str          0.0%  Jeremy Jackson
+  b_fighter_nick_name                 str         32.6%  Scorpion
+  b_height                            str          1.5%  5' 10"
+  b_weight_lbs                        float64      0.5%  170.0  <--
+  b_reach_inches                      float64     20.5%  74.0
+  b_stance                            str          3.6%  Orthodox
+  b_dob                               str          2.6%  1982-09-19  <--
+  b_slpm                              float64      0.0%  0.71
+  b_str_acc                           int64        0.0%  27  <--
+  b_sapm                              float64      0.0%  2.03
+  b_str_def                           int64        0.0%  25  <--
+  b_td_avg                            float64      0.0%  1.52  <--
+  b_td_acc                            int64        0.0%  40  <--
+  b_td_def                            int64        0.0%  58  <--
+  b_sub_avg                           float64      0.0%  0.0  <--
+  r_total_kd                          int64        0.0%  0  <--
+  b_total_kd                          int64        0.0%  0  <--
+  r_total_sig_landed                  int64        0.0%  12  <--
+  r_total_sig_atmp                    int64        0.0%  15  <--
+  b_total_sig_landed                  int64        0.0%  5  <--
+  b_total_sig_atmp                    int64        0.0%  14  <--
+  r_total_total_str_landed            int64        0.0%  40  <--
+  r_total_total_str_atmp              int64        0.0%  43  <--
+  b_total_total_str_landed            int64        0.0%  20  <--
+  b_total_total_str_atmp              int64        0.0%  33  <--
+  r_total_td_success                  int64        0.0%  0  <--
+  r_total_td_atmp                     int64        0.0%  0  <--
+  b_total_td_success                  int64        0.0%  2  <--
+  b_total_td_atmp                     int64        0.0%  5  <--
+  r_total_sub_att                     int64        0.0%  0  <--
+  b_total_sub_att                     int64        0.0%  0  <--
+  r_total_rev                         int64        0.0%  1
+  b_total_rev                         int64        0.0%  1
+  r_total_sig_str_landed_head         int64        0.0%  7  <--
+  r_total_sig_str_atmp_head           int64        0.0%  10  <--
+  b_total_sig_str_landed_head         int64        0.0%  0  <--
+  b_total_sig_str_atmp_head           int64        0.0%  7  <--
+  r_total_sig_str_landed_body         int64        0.0%  2  <--
+  r_total_sig_str_atmp_body           int64        0.0%  2  <--
+  b_total_sig_str_landed_body         int64        0.0%  1  <--
+  b_total_sig_str_atmp_body           int64        0.0%  1  <--
+  r_total_sig_str_landed_leg          int64        0.0%  3  <--
+  r_total_sig_str_atmp_leg            int64        0.0%  3  <--
+  b_total_sig_str_landed_leg          int64        0.0%  4  <--
+  b_total_sig_str_atmp_leg            int64        0.0%  6  <--
+  r_total_sig_str_landed_distance     int64        0.0%  4  <--
+  r_total_sig_str_atmp_distance       int64        0.0%  5  <--
+  b_total_sig_str_landed_distance     int64        0.0%  0  <--
+  b_total_sig_str_atmp_distance       int64        0.0%  8  <--
+  r_total_sig_str_landed_clinch       int64        0.0%  3  <--
+  r_total_sig_str_atmp_clinch         int64        0.0%  3  <--
+  b_total_sig_str_landed_clinch       int64        0.0%  5  <--
+  b_total_sig_str_atmp_clinch         int64        0.0%  5  <--
+  r_total_sig_str_landed_ground       int64        0.0%  5  <--
+  r_total_sig_str_atmp_ground         int64        0.0%  7  <--
+  b_total_sig_str_landed_ground       int64        0.0%  0  <--
+  b_total_sig_str_atmp_ground         int64        0.0%  1  <--
+  r_total_ctrl_seconds                int64        0.0%  67  <--
+  b_total_ctrl_seconds                int64        0.0%  201  <--
+  rounds_fought                       int64        0.0%  2
+  date range [event_date]: 1993-11-12 -> 2026-08-08 (0 unparseable/missing)
+  rows per year (2010+): 2010:507, 2011:496, 2012:400, 2013:399, 2014:503, 2015:473, 2016:493, 2017:497, 2018:529, 2019:565, 2020:504, 2021:559, 2022:587, 2023:598, 2024:597, 2025:602, 2026:346
+  date range [r_dob]: 1958-04-15 -> 2005-12-20 (142 unparseable/missing)
+  date range [b_dob]: 1943-01-25 -> 2005-12-20 (295 unparseable/missing)
+
+First 3 rows:
+           fight_id          event_id                                 event_name  event_date          event_location  weight_class  title_fight         winner_id result_status      method  finish_round finish_time    time_format           referee                      details bonuses      r_fighter_id r_fighter_name r_fighter_nick_name r_height  r_weight_lbs  r_reach_inches  r_stance       r_dob  r_slpm  r_str_acc  r_sapm  r_str_def  r_td_avg  r_td_acc  r_td_def  r_sub_avg      b_fighter_id  b_fighter_name b_fighter_nick_name b_height  b_weight_lbs  b_reach_inches  b_stance       b_dob  b_slpm  b_str_acc  b_sapm  b_str_def  b_td_avg  b_td_acc  b_td_def  b_sub_avg  r_total_kd  b_total_kd  r_total_sig_landed  r_total_sig_atmp  b_total_sig_landed  b_total_sig_atmp  r_total_total_str_landed  r_total_total_str_atmp  b_total_total_str_landed  b_total_total_str_atmp  r_total_td_success  r_total_td_atmp  b_total_td_success  b_total_td_atmp  r_total_sub_att  b_total_sub_att  r_total_rev  b_total_rev  r_total_sig_str_landed_head  r_total_sig_str_atmp_head  b_total_sig_str_landed_head  b_total_sig_str_atmp_head  r_total_sig_str_landed_body  r_total_sig_str_atmp_body  b_total_sig_str_landed_body  b_total_sig_str_atmp_body  r_total_sig_str_landed_leg  r_total_sig_str_atmp_leg  b_total_sig_str_landed_leg  b_total_sig_str_atmp_leg  r_total_sig_str_landed_distance  r_total_sig_str_atmp_distance  b_total_sig_str_landed_distance  b_total_sig_str_atmp_distance  r_total_sig_str_landed_clinch  r_total_sig_str_atmp_clinch  b_total_sig_str_landed_clinch  b_total_sig_str_atmp_clinch  r_total_sig_str_landed_ground  r_total_sig_str_atmp_ground  b_total_sig_str_landed_ground  b_total_sig_str_atmp_ground  r_total_ctrl_seconds  b_total_ctrl_seconds  rounds_fought
+0  4cd909fa0d3e0483  baf942f4bcb09894  The Ultimate Fighter: The Comeback Finale  2006-11-11  Las Vegas, Nevada, USA  Welterweight            0  c3ea8deeba00462b           win  Submission             2        1:11  3 Rnd (5-5-5)         Herb Dean  Injury  \n      Neck Injury     NaN  c3ea8deeba00462b    Pete Spratt   The Secret Weapon    5' 9"         170.0             NaN  Orthodox  1971-01-09    1.63         48    1.33         55      0.30       100        46        0.3  ad32471f01e7b1a5  Jeremy Jackson            Scorpion   5' 10"         170.0             NaN  Orthodox  1982-09-19    0.71         27    2.03         25      1.52        40        58        0.0           0           0                  12                15                   5                14                        40                      43                        20                      33                   0                0                   2                5                0                0            1            1                            7                         10                            0                          7                            2                          2                            1                          1                           3                         3                           4                         6                                4                              5                                0                              8                              3                            3                              5                            5                              5                            7                              0                            1                    67                   201              2
+1  5ac9cf4ffc15ccca  c61f66d8c3fd5f07                         UFC 44: Undisputed  2003-09-26  Las Vegas, Nevada, USA  Welterweight            0  f57a8a52ca401ed9           win  Submission             3        2:04  3 Rnd (5-5-5)  Steve Mazzagatti     Armbar From Bottom Guard     NaN  f57a8a52ca401ed9      Nick Diaz                 NaN    6' 1"         170.0            76.0  Southpaw  1983-08-02    5.71         42    3.84         59      1.28        32        60        1.0  ad32471f01e7b1a5  Jeremy Jackson            Scorpion   5' 10"         170.0             NaN  Orthodox  1982-09-19    0.71         27    2.03         25      1.52        40        58        0.0           0           0                  17                24                   9                37                        92                     107                        71                     103                   6               13                   0                0                2                0            0            1                           14                         20                            9                         37                            3                          4                            0                          0                           0                         0                           0                         0                                1                              3                                0                              7                              0                            0                              1                            5                             16                           21                              8                           25                   402                   208              3
+2  e8ec95cdef577733  80e6d71e14c1d356                    KOTC 15: Bad Intentions  2002-06-22                     NaN  Welterweight            0  79899ecf62020f6d           win      KO/TKO             1        1:27  3 Rnd (5-5-5)               NaN   Punches to Head From Mount     NaN  79899ecf62020f6d  Joe Stevenson               Daddy    5' 7"         145.0            70.0  Orthodox  1982-06-15    2.05         44    2.44         60      2.75        44        39        2.2  ad32471f01e7b1a5  Jeremy Jackson            Scorpion   5' 10"         170.0             NaN  Orthodox  1982-09-19    0.71         27    2.03         25      1.52        40        58        0.0           0           0                  11                15                   0                 0                        12                      16                         4                       4                   1                4                   0                0                0                0            0            0                           11                         15                            0                          0                            0                          0                            0                          0                           0                         0                           0                         0                                0                              0                                0                              0                              0                            0                              0                            0                             11                           15                              0                            0                     0                     0              1
+
+================================================================================
+FILE: round.csv   rows=25,131   cols=48
+================================================================================
+Columns (dtype, % missing, example value):
+  fight_id                            str          0.0%  4cd909fa0d3e0483
+  round_no                            int64        0.0%  1
+  r_id                                str          0.0%  c3ea8deeba00462b
+  b_id                                str          0.0%  ad32471f01e7b1a5
+  r_kd                                int64        0.0%  0  <--
+  b_kd                                int64        0.0%  0  <--
+  r_sig_landed                        int64        0.0%  11  <--
+  r_sig_atmp                          int64        0.0%  14  <--
+  b_sig_landed                        int64        0.0%  5  <--
+  b_sig_atmp                          int64        0.0%  12  <--
+  r_total_str_landed                  int64        0.0%  37  <--
+  r_total_str_atmp                    int64        0.0%  40  <--
+  b_total_str_landed                  int64        0.0%  20  <--
+  b_total_str_atmp                    int64        0.0%  31  <--
+  r_td_success                        int64        0.0%  0  <--
+  r_td_atmp                           int64        0.0%  0  <--
+  b_td_success                        int64        0.0%  2  <--
+  b_td_atmp                           int64        0.0%  4  <--
+  r_sub_att                           int64        0.0%  0  <--
+  b_sub_att                           int64        0.0%  0  <--
+  r_rev                               int64        0.0%  1
+  b_rev                               int64        0.0%  1
+  r_ctrl                              str         10.6%  1:00  <--
+  b_ctrl                              str         10.6%  2:59  <--
+  r_sig_str_landed_head               int64        0.0%  7  <--
+  r_sig_str_atmp_head                 int64        0.0%  10  <--
+  b_sig_str_landed_head               int64        0.0%  0  <--
+  b_sig_str_atmp_head                 int64        0.0%  6  <--
+  r_sig_str_landed_body               int64        0.0%  2  <--
+  r_sig_str_atmp_body                 int64        0.0%  2  <--
+  b_sig_str_landed_body               int64        0.0%  1  <--
+  b_sig_str_atmp_body                 int64        0.0%  1  <--
+  r_sig_str_landed_leg                int64        0.0%  2  <--
+  r_sig_str_atmp_leg                  int64        0.0%  2  <--
+  b_sig_str_landed_leg                int64        0.0%  4  <--
+  b_sig_str_atmp_leg                  int64        0.0%  5  <--
+  r_sig_str_landed_distance           int64        0.0%  3  <--
+  r_sig_str_atmp_distance             int64        0.0%  4  <--
+  b_sig_str_landed_distance           int64        0.0%  0  <--
+  b_sig_str_atmp_distance             int64        0.0%  6  <--
+  r_sig_str_landed_clinch             int64        0.0%  3  <--
+  r_sig_str_atmp_clinch               int64        0.0%  3  <--
+  b_sig_str_landed_clinch             int64        0.0%  5  <--
+  b_sig_str_atmp_clinch               int64        0.0%  5  <--
+  r_sig_str_landed_ground             int64        0.0%  5  <--
+  r_sig_str_atmp_ground               int64        0.0%  7  <--
+  b_sig_str_landed_ground             int64        0.0%  0  <--
+  b_sig_str_atmp_ground               int64        0.0%  1  <--
+
+First 3 rows:
+           fight_id  round_no              r_id              b_id  r_kd  b_kd  r_sig_landed  r_sig_atmp  b_sig_landed  b_sig_atmp  r_total_str_landed  r_total_str_atmp  b_total_str_landed  b_total_str_atmp  r_td_success  r_td_atmp  b_td_success  b_td_atmp  r_sub_att  b_sub_att  r_rev  b_rev r_ctrl b_ctrl  r_sig_str_landed_head  r_sig_str_atmp_head  b_sig_str_landed_head  b_sig_str_atmp_head  r_sig_str_landed_body  r_sig_str_atmp_body  b_sig_str_landed_body  b_sig_str_atmp_body  r_sig_str_landed_leg  r_sig_str_atmp_leg  b_sig_str_landed_leg  b_sig_str_atmp_leg  r_sig_str_landed_distance  r_sig_str_atmp_distance  b_sig_str_landed_distance  b_sig_str_atmp_distance  r_sig_str_landed_clinch  r_sig_str_atmp_clinch  b_sig_str_landed_clinch  b_sig_str_atmp_clinch  r_sig_str_landed_ground  r_sig_str_atmp_ground  b_sig_str_landed_ground  b_sig_str_atmp_ground
+0  4cd909fa0d3e0483         1  c3ea8deeba00462b  ad32471f01e7b1a5     0     0            11          14             5          12                  37                40                  20                31             0          0             2          4          0          0      1      1   1:00   2:59                      7                   10                      0                    6                      2                    2                      1                    1                     2                   2                     4                   5                          3                        4                          0                        6                        3                      3                        5                      5                        5                      7                        0                      1
+1  4cd909fa0d3e0483         2  c3ea8deeba00462b  ad32471f01e7b1a5     0     0             1           1             0           2                   3                 3                   0                 2             0          0             0          1          0          0      0      0   0:07   0:22                      0                    0                      0                    1                      0                    0                      0                    0                     1                   1                     0                   1                          1                        1                          0                        2                        0                      0                        0                      0                        0                      0                        0                      0
+2  5ac9cf4ffc15ccca         1  f57a8a52ca401ed9  ad32471f01e7b1a5     0     0             8          12             3           7                  60                69                  25                31             3          8             0          0          0          0      0      0   3:54   0:20                      8                   12                      3                    7                      0                    0                      0                    0                     0                   0                     0                   0                          0                        0                          0                        2                        0                      0                        1                      3                        8                     12                        2                      2
+
+================================================================================
+FILE: scrape_error.csv   rows=330   cols=9
+================================================================================
+Columns (dtype, % missing, example value):
+  error_id                            int64        0.0%  1
+  entity_type                         str          0.0%  fight
+  entity_id                           str          0.0%  fc89b69a4fe79603
+  context                             float64    100.0%  
+  url                                 str          0.0%  http://ufcstats.com/fight-details/fc89b6
+  error_name                          str          0.0%  PartialFightParse
+  description                         str          0.0%  expected 2 round-by-round tables, found 
+  occurred_at                         str          0.0%  2026-08-11 05:57:43
+  resolved                            int64        0.0%  0
+
+First 3 rows:
+   error_id entity_type         entity_id  context                                                 url         error_name                                                                                                                  description          occurred_at  resolved
+0         1       fight  fc89b69a4fe79603      NaN  http://ufcstats.com/fight-details/fc89b69a4fe79603  PartialFightParse  expected 2 round-by-round tables, found 0 -- this fight likely has no round stats on ufcstats.com (common for older fights)  2026-08-11 05:57:43         0
+1         2       fight  9325bcf98fa2a15e      NaN  http://ufcstats.com/fight-details/9325bcf98fa2a15e  PartialFightParse  expected 2 round-by-round tables, found 0 -- this fight likely has no round stats on ufcstats.com (common for older fights)  2026-08-11 05:57:49         0
+2         3       fight  6035a68279b69aeb      NaN  http://ufcstats.com/fight-details/6035a68279b69aeb  PartialFightParse  expected 2 round-by-round tables, found 0 -- this fight likely has no round stats on ufcstats.com (common for older fights)  2026-08-11 05:57:52         0
+
+================================================================================
+COMPARISON vs ufc_2026.csv
+================================================================================
+Your scrape: 806 rows; date column = event_date
+  your date range: 2026-01-24 -> 2026-09-19
+  event.csv: 28 rows dated 2026 (latest date 2026-08-08)
+  master.csv: 346 rows dated 2026 (latest date 2026-08-08)

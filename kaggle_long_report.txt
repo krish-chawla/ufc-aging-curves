@@ -1,0 +1,127 @@
+Loaded 11,441 bouts from Whole_Dataset/master.csv (0 duplicate fight_ids)
+Bouts on/after 2010-01-01: 8,655
+
+Bouts per promotion (2010+):
+promotion
+UFC            7555
+DWCS            440
+Strikeforce     332
+Road to UFC     138
+Other           104
+WEC              86
+
+Events per year (all):
+event_date
+2010    54
+2011    50
+2012    43
+2013    36
+2014    46
+2015    41
+2016    41
+2017    47
+2018    50
+2019    52
+2020    51
+2021    53
+2022    58
+2023    56
+2024    56
+2025    55
+2026    28
+
+Bouts at events NOT starting with 'UFC'/'The Ultimate Fighter': 1,100 across 175 events
+Top 25 of those event names (check these by eye):
+event_name
+Strikeforce Challengers 13               14
+Strikeforce - Henderson vs. Babalu       13
+Strikeforce - Miami                      12
+Strikeforce - Heavy Artillery            12
+WEC 49: Varner vs. Shalorus              11
+WEC 52: Faber vs. Mizugaki               11
+Road to UFC 4.5 + 4.6                    11
+WEC 48: Aldo vs. Faber                   11
+WEC 51: Aldo vs. Gamburyan               11
+WEC 47: Bowles vs. Cruz                  11
+WEC 53: Henderson vs. Pettis             11
+DREAM - Fight for Japan                  11
+Strikeforce - Houston                    11
+Strikeforce - Marquardt vs Saffiedine    11
+DREAM 17                                 11
+Dynamite!! 2010                          11
+WEC 46: Varner vs. Henderson             10
+WEC 50: Cruz vs. Benavidez               10
+Strikeforce - Diaz vs. Daley             10
+Road to UFC 4.1 + 4.2                    10
+Road to UFC 3.5 + 3.6                    10
+Road to UFC 2.3 + 2.4                    10
+Road To UFC 5.2                          10
+Road to UFC 2.1 + 2.2                    10
+Strikeforce - Fedor vs. Silva            10
+
+Long format: 17,310 rows (should be 2 x bouts = 17,310)
+Unique fighters: 3,080
+Rows missing DOB/age: 65 (0.4%)
+Rows with age < 18 or > 50 (likely bad DOB): 1
+      event_date    fighter_name        dob  age_at_fight
+12749 2022-09-20  Raul Rosas Jr. 2004-10-08      17.94935
+
+Age summary:
+count    17245.00
+mean        30.48
+std          4.10
+min         17.95
+25%         27.58
+50%         30.27
+75%         33.18
+max         48.91
+
+Gender counts (rows):
+gender
+M    15258
+F     2052
+
+Outcome counts:
+outcome
+L             8497
+W             8497
+NO_CONTEST     194
+DRAW           122
+
+Method counts:
+method
+Decision - Unanimous       6402
+KO/TKO                     5378
+Submission                 3236
+Decision - Split           1718
+Decision - Majority         196
+TKO - Doctor's Stoppage     146
+Overturned                  124
+Could Not Continue           70
+DQ                           40
+
+Fight length: 0 unparseable; max 25.0 min
+Rows with sig_atmp == 0 (possible missing stats): 325
+Rows with ctrl_seconds == 0: 20.5%; BOTH fighters 0 control: 6.9% (of those, 274 bouts lasted > 10 min: suspicious)
+
+Rows per year:
+event_date
+2010    1014
+2011     992
+2012     800
+2013     798
+2014    1006
+2015     946
+2016     986
+2017     994
+2018    1058
+2019    1130
+2020    1008
+2021    1118
+2022    1174
+2023    1196
+2024    1194
+2025    1204
+2026     692
+
+Columns (87): fight_id, event_id, event_name, event_date, event_location, weight_class, title_fight, winner_id, result_status, method, finish_round, finish_time, time_format, referee, details, bonuses, rounds_fought, corner, fighter_id, fighter_name, height, reach_inches, stance, dob, opponent_id, opponent_name, opp_dob, kd, opp_kd, sig_landed, sig_atmp, opp_sig_landed, opp_sig_atmp, total_str_landed, total_str_atmp, opp_total_str_landed, opp_total_str_atmp, td_success, td_atmp, opp_td_success, opp_td_atmp, sub_att, opp_sub_att, rev, opp_rev, sig_str_landed_head, sig_str_atmp_head, opp_sig_str_landed_head, opp_sig_str_atmp_head, sig_str_landed_body, sig_str_atmp_body, opp_sig_str_landed_body, opp_sig_str_atmp_body, sig_str_landed_leg, sig_str_atmp_leg, opp_sig_str_landed_leg, opp_sig_str_atmp_leg, sig_str_landed_distance, sig_str_atmp_distance, opp_sig_str_landed_distance, opp_sig_str_atmp_distance, sig_str_landed_clinch, sig_str_atmp_clinch, opp_sig_str_landed_clinch, opp_sig_str_atmp_clinch, sig_str_landed_ground, sig_str_atmp_ground, opp_sig_str_landed_ground, opp_sig_str_atmp_ground, ctrl_seconds, opp_ctrl_seconds, promotion, is_ufc_event, age_at_fight, opp_age_at_fight, age_diff, gender, outcome, win, finish, fight_seconds, sig_acc, td_acc, sig_landed_per_min, sig_absorbed_per_min, td_per_15min, ctrl_share
