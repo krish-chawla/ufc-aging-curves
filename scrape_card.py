@@ -132,6 +132,35 @@ def parse_event_date(soup: BeautifulSoup) -> "datetime | None":
     return None
 
 
+def parse_result_flag(col) -> "str | None":
+    """Read the W/L column of an event-page row.
+    UFCStats lists the WINNER as fighter_1 and shows one 'win' flag;
+    draws show 'draw' and no contests show 'nc'.
+    Returns 'win' (fighter_1 won), 'draw', 'nc', or None if unreadable."""
+    flags = [t.get_text(strip=True).lower() for t in col.select(".b-flag__text")]
+    text = " ".join(flags) if flags else col.get_text(" ", strip=True).lower()
+    for key in ("win", "draw", "nc"):
+        if key in text.split():
+            return key
+    return None
+
+
+def add_outcome(row: dict) -> dict:
+    """Per-fighter outcome from bout_result: W / L / D (draw) / NC."""
+    res = row.get("bout_result")
+    me = (row.get("fighter") or "").strip().lower()
+    f1 = (row.get("fighter_1") or "").strip().lower()
+    if res == "win":
+        row["outcome"] = "W" if me == f1 else "L"
+    elif res == "draw":
+        row["outcome"] = "D"
+    elif res == "nc":
+        row["outcome"] = "NC"
+    else:
+        row["outcome"] = None
+    return row
+
+
 def get_fights_on_card(event_url: str) -> list[dict]:
     """Return one dict per fight on the card, including fighter-detail links."""
     soup = get_soup(event_url)
@@ -166,6 +195,7 @@ def get_fights_on_card(event_url: str) -> list[dict]:
         fight_time = cols[9].get_text(" ", strip=True) if len(cols) > 9 else None
 
         gender = "Women" if weight_class and weight_class.strip().startswith("Women's") else "Men"
+        bout_result = parse_result_flag(cols[0])
 
         fights.append({
             "event": event_name,
@@ -180,6 +210,7 @@ def get_fights_on_card(event_url: str) -> list[dict]:
             "round": round_num,
             "time": fight_time,
             "fight_url": link,
+            "bout_result": bout_result,
         })
     return fights
 
@@ -332,7 +363,7 @@ def build_card_dataset(event_url: str, pause: float = 1.0, strict: bool = False)
             dob = get_fighter_dob(fighter_url)
             merged["dob"] = dob.strftime("%Y-%m-%d") if dob else None
             merged["age_at_fight"] = compute_age(dob, fight["event_date"])
-            all_rows.append(merged)
+            all_rows.append(add_outcome(merged))
 
         print(f"  parsed: {fight['fighter_1']} vs {fight['fighter_2']}")
         time.sleep(pause)  # be polite to the server
