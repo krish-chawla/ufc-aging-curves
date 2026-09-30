@@ -12,9 +12,9 @@ How checkpointing works:
   * Failures are logged to data/failed_events.jsonl for inspection.
 
 Usage:
-  python run_historical.py --limit 3          # small test run
-  caffeinate -i python run_historical.py      # full run (Mac: prevents sleep)
-  python run_historical.py --merge-only       # combine checkpoints into one CSV
+  python3 run_historical.py --limit 3          # small test run
+  caffeinate -i python3 run_historical.py      # full run (Mac: prevents sleep)
+  python3 run_historical.py --merge-only       # combine checkpoints into one CSV
 """
 
 import argparse
@@ -30,13 +30,28 @@ from pathlib import Path
 import pandas as pd
 
 # ---------------------------------------------------------------------------
-# ADAPT THESE IMPORTS to match your existing scripts.
-#   get_event_urls(start_year, session) -> list[str]         (event-details URLs)
-#   scrape_card(event_url, session)     -> DataFrame or list[dict] (one row per fighter per bout)
-#   make_session()                      -> requests.Session with the PoW check solved
+# Wired to Krish's scripts (scrape_card.py, get_event_urls.py).
 # ---------------------------------------------------------------------------
-from get_event_urls import get_event_urls
-from scrape_card import scrape_card, make_session
+import scrape_card
+from get_event_urls import get_all_event_urls
+
+
+def make_session():
+    """Drop the bot-check cookie so the next request re-solves the challenge.
+    scrape_card.py keeps one module-level SESSION, so we reset that one."""
+    scrape_card.SESSION.cookies.clear()
+    return scrape_card.SESSION
+
+
+def get_event_urls(start_year: int, session=None) -> list[str]:
+    return [e["url"] for e in get_all_event_urls(start_year)]
+
+
+def scrape_card_fn(event_url: str, session=None) -> pd.DataFrame:
+    # strict=True: one failed fight fails the whole card, so it is retried
+    # instead of being checkpointed with fights missing.
+    return scrape_card.build_card_dataset(event_url, pause=1.0, strict=True)
+
 
 DATA_DIR = Path("data")
 EVENTS_DIR = DATA_DIR / "raw" / "events"
@@ -106,7 +121,7 @@ def scrape_with_retries(url: str, holder: dict, max_retries: int, base_wait: flo
     last_err = None
     for attempt in range(1, max_retries + 1):
         try:
-            result = scrape_card(url, holder["session"])
+            result = scrape_card_fn(url, holder["session"])
             return result if isinstance(result, pd.DataFrame) else pd.DataFrame(result)
         except KeyboardInterrupt:
             raise

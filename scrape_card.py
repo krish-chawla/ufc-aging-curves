@@ -231,22 +231,46 @@ def parse_totals_table(table) -> pd.DataFrame:
     return pd.DataFrame([data["__row0"], data["__row1"]], columns=TOTALS_COLUMNS)
 
 
+_ROUND_LABEL = re.compile(r"\bRound\s+\d+\b", re.IGNORECASE)
+
+
+def _is_per_round_table(table) -> bool:
+    """Per-round tables have the `js-fight-table` class and 'Round 1', 'Round 2', ...
+    header rows inside them. The fight TOTALS table has neither."""
+    classes = table.get("class") or []
+    if "js-fight-table" in classes:
+        return True
+    return bool(_ROUND_LABEL.search(table.get_text(" ", strip=True)))
+
+
+def find_totals_table(soup: BeautifulSoup):
+    """Return the fight-TOTALS table (the one with KD / Sig. str. / Td / Ctrl
+    covering the whole fight), or None.
+
+    BUG FIX (Sep 2026): the old code searched only `table.b-fight-details__table`.
+    On UFCStats the totals table does NOT have that class, but the per-round
+    breakdown table does, so the old code silently returned ROUND 1 stats for
+    every fight that went past round 1 (confirmed against Kaggle round.csv:
+    462 of 462 comparable rows matched round 1 exactly)."""
+    for t in soup.find_all("table"):
+        headers = [th.get_text(strip=True) for th in t.select("thead th")]
+        if "KD" not in headers or "Ctrl" not in headers:
+            continue  # the second totals table (Head/Body/Leg) has no KD/Ctrl columns
+        if _is_per_round_table(t):
+            continue
+        return t
+    return None
+
+
 def parse_fight(fight_url: str) -> pd.DataFrame:
     """Return a 2-row DataFrame (one row per fighter) of fight totals for this fight."""
     soup = get_soup(fight_url)
 
-    tables = soup.select("table.b-fight-details__table")
-    totals_table = None
-    for t in tables:
-        header_cells = [th.get_text(strip=True) for th in t.select("thead th")]
-        if header_cells and "KD" in header_cells:
-            totals_table = t
-            break
-    if totals_table is None and tables:
-        totals_table = tables[0]
-
+    totals_table = find_totals_table(soup)
     if totals_table is None:
-        return pd.DataFrame(columns=TOTALS_COLUMNS + ["fight_url"])
+        # Raise instead of falling back to some other table: a loud failure gets
+        # logged and retried; a silent fallback gets saved as wrong data.
+        raise RuntimeError(f"No fight-totals table found on {fight_url}")
 
     df = parse_totals_table(totals_table)
     df["fight_url"] = fight_url
@@ -260,7 +284,9 @@ def compute_age(dob: "datetime | None", event_date: "datetime | None") -> "float
     return round(days / 365.25, 2)
 
 
-def build_card_dataset(event_url: str, pause: float = 1.0) -> pd.DataFrame:
+def build_card_dataset(event_url: str, pause: float = 1.0, strict: bool = False) -> pd.DataFrame:
+    """strict=True: raise if ANY fight on the card fails, so a resumable driver
+    (run_historical.py) never checkpoints a card with fights missing."""
     fights = get_fights_on_card(event_url)
     if not fights:
         raise RuntimeError(
@@ -273,6 +299,8 @@ def build_card_dataset(event_url: str, pause: float = 1.0) -> pd.DataFrame:
         try:
             totals = parse_fight(fight["fight_url"])
         except Exception as exc:  # noqa: BLE001 - keep going on one bad fight
+            if strict:
+                raise
             print(f"  ! failed to parse {fight['fight_url']}: {exc}")
             continue
 
