@@ -10,8 +10,11 @@
 # Each metric is modeled on its natural scale with lme4, fighter as a random effect:
 #   accuracy / defense  -> binomial GLMM (successes out of attempts) + observation-level
 #                          random effect for extra-binomial variation (opponent, fight style)
-#   per-minute output   -> negative binomial GLMM with log(minutes) offset
-#   control time        -> negative binomial GLMM with log(fight seconds) offset
+#   per-minute output   -> Poisson GLMM with log(minutes) offset + observation-level
+#                          random effect for overdispersion (Poisson-lognormal)
+#   control time        -> binomial GLMM: control seconds out of fight seconds
+#   (glmer.nb was used first but can converge to a degenerate fit with the fighter
+#    variance at 0; the Poisson-lognormal form is stable and gives the same curves)
 #   win                 -> head-to-head (paired) logistic model, one row per bout:
 #                          logit P(win) = f(own age) - f(opponent age), f a spline per gender
 #   KO/TKO loss         -> logistic model on own age + opponent age + division + era
@@ -98,18 +101,19 @@ specs <- list(
   sig_def         = list(label = "Sig. strike defense", type = "binom",
                          lhs = "cbind(opp_sig_atmp - opp_sig_landed, opp_sig_landed)",
                          data = \() filter(d, opp_sig_atmp > 0)),
-  sig_landed_pm   = list(label = "Sig. strikes landed / min", type = "nb",
+  sig_landed_pm   = list(label = "Sig. strikes landed / min", type = "pois",
                          lhs = "sig_landed", offset = "offset(log(minutes))", data = \() d),
-  sig_absorbed_pm = list(label = "Sig. strikes absorbed / min", type = "nb", worse_high = TRUE,
+  sig_absorbed_pm = list(label = "Sig. strikes absorbed / min", type = "pois", worse_high = TRUE,
                          lhs = "opp_sig_landed", offset = "offset(log(minutes))", data = \() d),
   td_acc          = list(label = "Takedown accuracy", type = "binom",
                          lhs = "cbind(td_landed, td_atmp - td_landed)", data = \() filter(d, td_atmp > 0)),
   td_def          = list(label = "Takedown defense", type = "binom",
                          lhs = "cbind(opp_td_atmp - opp_td_landed, opp_td_landed)",
                          data = \() filter(d, opp_td_atmp > 0)),
-  ctrl_share      = list(label = "Control time share", type = "nb",
-                         lhs = "ctrl_seconds", offset = "offset(log(minutes * 60))",
-                         data = \() filter(d, !is.na(ctrl_seconds))),
+  ctrl_share      = list(label = "Control time share", type = "binom",
+                         lhs = "cbind(ctrl_s, fight_s - ctrl_s)",
+                         data = \() filter(d, !is.na(ctrl_seconds)) |>
+                           mutate(fight_s = round(minutes * 60), ctrl_s = pmin(round(ctrl_seconds), fight_s))),
   win             = list(label = "Win probability vs. a 30-year-old", type = "paired",
                          lhs = "win", data = \() bout_one),
   ko_loss         = list(label = "KO/TKO loss probability", type = "logit", worse_high = TRUE,
@@ -134,10 +138,9 @@ fit_one <- function(s, dat) {
     return(glm(as.formula(paste(s$lhs, "~", fixed_rhs)), data = dat, family = binomial))
   }
   rhs <- paste(fixed_rhs, if (!is.null(s$offset)) paste("+", s$offset), "+ (1 | fighter_id)")
-  if (s$type == "binom") rhs <- paste(rhs, "+ (1 | obs)")      # extra-binomial variation
+  rhs <- paste(rhs, "+ (1 | obs)")   # observation-level effect: extra-binomial / extra-Poisson variation
   f <- as.formula(paste(s$lhs, "~", rhs))
-  if (s$type == "nb") glmer.nb(f, data = dat, control = CTRL, nAGQ = 0)
-  else glmer(f, data = dat, family = binomial, control = CTRL, nAGQ = 0)
+  glmer(f, data = dat, family = if (s$type == "pois") poisson else binomial, control = CTRL, nAGQ = 0)
 }
 
 is_mixed <- function(fit) inherits(fit, "merMod")
@@ -152,7 +155,8 @@ grid <- expand_grid(gender = factor(c("M", "F"), levels = c("M", "F")),
   filter(gender == "M" | (age >= f_range[1] & age <= f_range[2])) |>
   left_join(ref_wc, by = "gender") |>
   mutate(opp_age = median(d$opp_age), year = median(d$year), log_fightno = median(d$log_fightno),
-         minutes = 1, win = 0, ko_loss = 0, sig_landed = 0, opp_sig_landed = 0, ctrl_seconds = 0)
+         minutes = 1, win = 0, ko_loss = 0, sig_landed = 0, opp_sig_landed = 0, ctrl_seconds = 0,
+         ctrl_s = 0, fight_s = 1)
 
 # --------------------------------------------------------------- fit all
 curves <- list(); peaks <- list(); summaries <- character()
@@ -162,7 +166,8 @@ for (m in names(specs)) {
   dat <- s$data()
   fit <- suppressMessages(fit_one(s, dat))
   cat(sprintf("%-16s n=%6d  fit %4.1fs%s\n", m, nobs(fit), as.numeric(Sys.time() - t0, units = "secs"),
-              if (is_mixed(fit) && isSingular(fit)) "  (singular fit: a variance component is ~0)" else ""))
+              if (is_mixed(fit) && isSingular(fit))
+                "  ** WARNING: singular fit (a random-effect variance is ~0) - check before using **" else ""))
 
   # Population curve (random effects = 0) with intervals from the fixed-effect covariance
   if (s$type == "paired") {
@@ -176,11 +181,14 @@ for (m in names(specs)) {
   X <- X[, names(b), drop = FALSE]
   V <- as.matrix(vcov(fit))[names(b), names(b)]
   B <- MASS::mvrnorm(N_SIM, b, V)
-  # offsets are left out of X, so rate models give per-minute rates and the control
-  # model (offset = log fight seconds) gives control seconds per second = share
+  # offsets are left out of X, so the rate models give per-minute rates
   eta_hat <- as.numeric(X %*% b)
   eta_sim <- X %*% t(B)
-  inv <- if (s$type == "nb") exp else plogis
+  # Poisson-lognormal: mean rate for a typical fighter is exp(eta + sigma_obs^2 / 2)
+  if (s$type == "pois") {
+    s2 <- attr(VarCorr(fit)$obs, "stddev")^2
+    inv <- function(eta) exp(eta + s2 / 2)
+  } else inv <- plogis
   est <- inv(eta_hat); sim <- inv(eta_sim)
   curves[[m]] <- grid |> select(gender, age) |>
     mutate(metric = m, label = s$label, est = est,
