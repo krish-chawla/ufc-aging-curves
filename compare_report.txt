@@ -1,74 +1,166 @@
-Kaggle rows in window by promotion: {'UFC': 652, 'Road to UFC': 40} (only UFC cards are compared, since your scraper pulls UFC events)
-Overlap window: 2026-01-24 -> 2026-08-08
-Scrape rows in window: 652 (326 bouts, 26 events)
-Kaggle rows in window: 652 (326 bouts, 26 events)
+Kaggle rows in window by promotion: {'UFC': 15110, 'Other': 1044, 'DWCS': 880, 'Road to UFC': 276} (only UFC cards are compared, since your scraper pulls UFC events)
+Overlap window: 2010-01-02 -> 2026-08-08
+Scrape rows in window: 15,110 (7555 bouts, 642 events)
+Kaggle rows in window: 15,110 (7555 bouts, 642 events)
 Scrape rows where `fighter` matched neither fighter_1 nor fighter_2 by name: 0  (these get a wrong fighter_id; should be 0)
 Duplicate (fight, fighter) rows in scrape: 0
 
-Bouts in BOTH: 326 | only in scrape: 0 | only in Kaggle: 0
+Bouts in BOTH: 7555 | only in scrape: 0 | only in Kaggle: 0
 
-Matched fighter-bout rows: 652 of 652 scrape rows
-Same fighter_id but different name spelling: 0
+Matched fighter-bout rows: 15,110 of 15,110 scrape rows
+Same fighter_id but different name spelling: 1
 
 Agreement by stat (exact match):
-  kd                   652 compared    67 differ    0 missing in scrape    0 missing in Kaggle
-  sig_landed           652 compared   458 differ    0 missing in scrape    0 missing in Kaggle
-  sig_atmp             652 compared   462 differ    0 missing in scrape    0 missing in Kaggle
-  total_str_landed     652 compared   459 differ    0 missing in scrape    0 missing in Kaggle
-  total_str_atmp       652 compared   462 differ    0 missing in scrape    0 missing in Kaggle
-  td_success           652 compared   186 differ    0 missing in scrape    0 missing in Kaggle
-  td_atmp              652 compared   307 differ    0 missing in scrape    0 missing in Kaggle
-  sub_att              652 compared    84 differ    0 missing in scrape    0 missing in Kaggle
-  rev                  652 compared    43 differ    0 missing in scrape    0 missing in Kaggle
-  ctrl_seconds         652 compared   366 differ    0 missing in scrape    0 missing in Kaggle
-  finish_round         652 compared     0 differ    0 missing in scrape    0 missing in Kaggle
-  finish_seconds       652 compared     0 differ    0 missing in scrape    0 missing in Kaggle
-  dob                  652 compared     1 differ    0 missing in scrape    0 missing in Kaggle
-  age_at_fight       max abs difference 0.034 years (rows > 0.02 yr apart: 1)
+  kd                 15110 compared     0 differ    0 missing in scrape    0 missing in Kaggle
+  sig_landed         15110 compared     0 differ    0 missing in scrape    0 missing in Kaggle
+  sig_atmp           15110 compared     0 differ    0 missing in scrape    0 missing in Kaggle
+  total_str_landed   15110 compared     0 differ    0 missing in scrape    0 missing in Kaggle
+  total_str_atmp     15110 compared     0 differ    0 missing in scrape    0 missing in Kaggle
+  td_success         15110 compared     0 differ    0 missing in scrape    0 missing in Kaggle
+  td_atmp            15110 compared     0 differ    0 missing in scrape    0 missing in Kaggle
+  sub_att            15110 compared     0 differ    0 missing in scrape    0 missing in Kaggle
+  rev                15110 compared     0 differ    0 missing in scrape    0 missing in Kaggle
+  ctrl_seconds       15110 compared     0 differ    0 missing in scrape    0 missing in Kaggle
+  finish_round       15110 compared     0 differ    0 missing in scrape    0 missing in Kaggle
+  finish_seconds     15110 compared     0 differ    0 missing in scrape    0 missing in Kaggle
+  dob                15105 compared    10 differ    0 missing in scrape    0 missing in Kaggle
+  age_at_fight       max abs difference 0.084 years (rows > 0.02 yr apart: 10)
   event_date         0 differ
 
 Method labels, scrape vs Kaggle (how to map one onto the other):
-                 method_s             method_k  rows
-                      CNC   Could Not Continue     2
-                   KO/TKO               KO/TKO     6
-            KO/TKO Elbows               KO/TKO    10
-              KO/TKO Kick               KO/TKO    10
-              KO/TKO Knee               KO/TKO    12
-             KO/TKO Knees               KO/TKO     2
-             KO/TKO Punch               KO/TKO    74
-           KO/TKO Punches               KO/TKO   116
-KO/TKO Spinning Back Kick               KO/TKO     2
-                    M-DEC  Decision - Majority    14
-               Overturned           Overturned     2
-                    S-DEC     Decision - Split    38
-       SUB Anaconda Choke           Submission     4
-         SUB Arm Triangle           Submission    14
-               SUB Armbar           Submission     6
-          SUB Calf Slicer           Submission     4
-         SUB D'Arce Choke           Submission     6
-     SUB Guillotine Choke           Submission    20
-            SUB Heel Hook           Submission     2
-           SUB Neck Crank           Submission     4
-     SUB Rear Naked Choke           Submission    56
-       SUB Suloev Stretch           Submission     2
-              SUB Twister           Submission     2
-                    U-DEC Decision - Unanimous   244
+                   method_s                method_k  rows
+                        CNC      Could Not Continue    62
+                         DQ                      DQ    34
+        DQ Rear Naked Choke                      DQ     2
+                     KO/TKO                  KO/TKO   104
+                     KO/TKO TKO - Doctor's Stoppage   120
+               KO/TKO Elbow                  KO/TKO    74
+               KO/TKO Elbow TKO - Doctor's Stoppage     2
+              KO/TKO Elbows                  KO/TKO   236
+         KO/TKO Flying Knee                  KO/TKO    56
+                KO/TKO Kick                  KO/TKO   370
+               KO/TKO Kicks                  KO/TKO    10
+                KO/TKO Knee                  KO/TKO   206
+               KO/TKO Knees                  KO/TKO    48
+               KO/TKO Punch                  KO/TKO  1710
+             KO/TKO Punches                  KO/TKO  1742
+             KO/TKO Punches TKO - Doctor's Stoppage     2
+                KO/TKO Slam                  KO/TKO    20
+ KO/TKO Spinning Back Elbow                  KO/TKO    20
+  KO/TKO Spinning Back Fist                  KO/TKO    22
+  KO/TKO Spinning Back Kick                  KO/TKO    20
+                      M-DEC     Decision - Majority   180
+                 Overturned              Overturned    74
+    Overturned Arm Triangle              Overturned     2
+    Overturned D'Arce Choke              Overturned     2
+          Overturned Elbows              Overturned     2
+Overturned Guillotine Choke              Overturned     8
+            Overturned Kick              Overturned     2
+            Overturned Knee              Overturned     2
+           Overturned Punch              Overturned    10
+         Overturned Punches              Overturned     4
+Overturned Rear Naked Choke              Overturned     2
+  Overturned Triangle Choke              Overturned     2
+                      S-DEC        Decision - Split  1512
+         SUB Anaconda Choke              Submission    68
+             SUB Ankle Lock              Submission     4
+           SUB Arm Triangle              Submission   238
+                 SUB Armbar              Submission   276
+          SUB Bulldog Choke              Submission     8
+            SUB Calf Slicer              Submission     8
+           SUB D'Arce Choke              Submission    94
+          SUB Ezekiel Choke              Submission     8
+          SUB Forearm Choke              Submission     2
+       SUB Guillotine Choke              Submission   488
+              SUB Heel Hook              Submission    36
+                 SUB Injury              Submission     8
+      SUB Inverted Triangle              Submission     8
+                SUB Keylock              Submission     6
+                 SUB Kimura              Submission    66
+                SUB Kneebar              Submission    30
+             SUB Neck Crank              Submission    26
+      SUB North-South Choke              Submission     8
+               SUB Omoplata              Submission     4
+           SUB Other - Lock              Submission     2
+     SUB Pace/Pillory Choke              Submission     2
+       SUB Peruvian Necktie              Submission     2
+       SUB Rear Naked Choke              Submission  1142
+             SUB Scarf Hold              Submission     6
+ SUB Schultz Front Headlock              Submission     4
+        SUB Straight Armbar              Submission     6
+         SUB Suloev Stretch              Submission     8
+        SUB Triangle Armbar              Submission    24
+         SUB Triangle Choke              Submission   120
+                SUB Twister              Submission     8
+         SUB Von Flue Choke              Submission    14
+                      U-DEC    Decision - Unanimous  5724
 
 Your gender label vs Kaggle weight class:
-gender_s                            Men  Women
-weight_class_k                                
-Bantamweight                         72      0
-Catch Weight                         10      0
-Featherweight                        84      0
-Flyweight                            50      0
-Heavyweight                          54      0
-Light Heavyweight                    50      0
-Lightweight                          90      0
-Middleweight                         84      0
-Road to 4 Bantamweight Tournament     2      0
-Road to 4 Featherweight Tournament    2      0
-Road to 4 Lightweight Tournament      2      0
-Welterweight                         70      0
-Women's Bantamweight                  0     26
-Women's Flyweight                     0     22
-Women's Strawweight                   0     34
+gender_s                                                    Men  Women
+weight_class_k                                                        
+Bantamweight                                               1574      0
+Catch Weight                                                150      0
+Featherweight                                              1738      0
+Flyweight                                                   842      0
+Heavyweight                                                1144      0
+Light Heavyweight                                          1174      0
+Lightweight                                                2430      0
+Middleweight                                               1830      0
+Road To 1 Bantamweight Tournament                             2      0
+Road To 1 Featherweight Tournament                            2      0
+Road To 1 Lightweight Tournament                              2      0
+Road to 1 Flyweight Tournament                                2      0
+Road to 3 Bantamweight Tournament                             2      0
+Road to 3 Flyweight Tournament                                2      0
+Road to 3 Women's Strawweight Tournament                      0      2
+Road to 4 Bantamweight Tournament                             2      0
+Road to 4 Featherweight Tournament                            2      0
+Road to 4 Lightweight Tournament                              2      0
+TUF Nations Canada vs. Australia Middleweight Tournament      2      0
+TUF Nations Canada vs. Australia Welterweight Tournament      2      0
+Ultimate Fighter 11 Middleweight Tournament                   2      0
+Ultimate Fighter 12 Lightweight Tournament                    2      0
+Ultimate Fighter 13 Welterweight Tournament                   2      0
+Ultimate Fighter 14 Bantamweight Tournament                   2      0
+Ultimate Fighter 14 Featherweight Tournament                  2      0
+Ultimate Fighter 15 Lightweight Tournament                    2      0
+Ultimate Fighter 16 Welterweight Tournament                   2      0
+Ultimate Fighter 17 Middleweight Tournament                   2      0
+Ultimate Fighter 18 Bantamweight Tournament                   2      0
+Ultimate Fighter 18 Women's Bantamweight Tournament           0      2
+Ultimate Fighter 19 Light Heavyweight Tournament              2      0
+Ultimate Fighter 19 Middleweight Tournament                   2      0
+Ultimate Fighter 21 Welterweight Tournament                   2      0
+Ultimate Fighter 22 Lightweight Tournament                    2      0
+Ultimate Fighter 23 Light Heavyweight Tournament              2      0
+Ultimate Fighter 23 Women's Strawweight Tournament            0      2
+Ultimate Fighter 25 Welterweight Tournament                   2      0
+Ultimate Fighter 27 Featherweight Tournament                  2      0
+Ultimate Fighter 27 Lightweight Tournament                    2      0
+Ultimate Fighter 28 Heavyweight Tournament                    2      0
+Ultimate Fighter 28 Women's Featherweight Tournament          0      2
+Ultimate Fighter 32 Featherweight Tournament                  2      0
+Ultimate Fighter 32 Middleweight Tournament                   2      0
+Ultimate Fighter 33 Flyweight Tournament                      2      0
+Ultimate Fighter 33 Welterweight Tournament                   2      0
+Ultimate Fighter Australia vs. UK Lightweight Tournament      2      0
+Ultimate Fighter Australia vs. UK Welterweight Tournament     2      0
+Ultimate Fighter Brazil 1 Featherweight Tournament            2      0
+Ultimate Fighter Brazil 1 Middleweight Tournament             2      0
+Ultimate Fighter Brazil 2 Welterweight Tournament             2      0
+Ultimate Fighter Brazil 3 Heavyweight Tournament              2      0
+Ultimate Fighter Brazil 3 Middleweight Tournament             2      0
+Ultimate Fighter Brazil 4 Bantamweight Tournament             2      0
+Ultimate Fighter Brazil 4 Lightweight Tournament              2      0
+Ultimate Fighter China Featherweight Tournament               2      0
+Ultimate Fighter China Welterweight Tournament                2      0
+Ultimate Fighter Latin America 2 Lightweight Tournament       2      0
+Ultimate Fighter Latin America 2 Welterweight Tournament      2      0
+Ultimate Fighter Latin America 3 Lightweight Tournament       2      0
+Ultimate Fighter Latin America Bantamweight Tournament        2      0
+Ultimate Fighter Latin America Featherweight Tournament       2      0
+Welterweight                                               2268      0
+Women's Bantamweight                                          0    498
+Women's Featherweight                                         0     58
+Women's Flyweight                                             0    554
+Women's Strawweight                                           0    744

@@ -3,3 +3,10 @@ __pycache__/
 *.pyc
 .venv/
 .env
+*.csv
+Whole_Dataset/
+data/
+eda/
+models*/
+prediction/
+agediff/
